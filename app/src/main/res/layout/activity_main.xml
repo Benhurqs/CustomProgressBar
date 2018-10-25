@@ -45,9 +45,10 @@
     <Button
             android:id="@+id/btn_change_progress"
             android:layout_margin="16dp"
-            android:onClick="onClicChangeProgressColor"
+            android:onClick="onClickChangeProgressColor"
             android:layout_width="match_parent"
             android:text="Change Progress Colors"
+            android:progressDrawable="@drawable/custom_progressbar"
             android:layout_below="@+id/content_edits"
             android:layout_height="wrap_content"/>
 
