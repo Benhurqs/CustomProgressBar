@@ -9,10 +9,13 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.ClipDrawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
+import android.os.CountDownTimer
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val totalTime = 5000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,5 +53,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         return color;
+    }
+
+    private fun progressColor(){
+        val countDouwn = object :CountDownTimer(totalTime, 1000){
+            override fun onFinish() {
+
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                val percent= (millisUntilFinished/totalTime)*100
+                progress_count.progress = percent.toInt()
+
+            }
+        }
+    }
+
+    fun onClickReset(view: View){
+        progress_count.progress = 0;
     }
 }
