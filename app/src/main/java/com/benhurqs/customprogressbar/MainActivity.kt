@@ -10,6 +10,7 @@ import android.graphics.drawable.ClipDrawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.CountDownTimer
+import android.widget.ProgressBar
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -27,14 +28,15 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickChangeProgressColor(view: View){
         changeProgressBG(
+            progressbar = progress,
             onColor = convertStringToColor(edt_progress.text.toString()),
             offColor = convertStringToColor(edt_background.text.toString())
         )
     }
 
-    private fun changeProgressBG(onColor: Int, offColor: Int){
-        progress.progressDrawable = this.resources.getDrawable(R.drawable.custom_progressbar);
-        val layerDrawable = progress.progressDrawable as LayerDrawable
+    private fun changeProgressBG(progressbar: ProgressBar, onColor: Int, offColor: Int){
+        progressbar.progressDrawable = this.resources.getDrawable(R.drawable.custom_progressbar);
+        val layerDrawable = progressbar.progressDrawable as LayerDrawable
 
         val bgGradientDrawable = layerDrawable
             .findDrawableByLayerId(android.R.id.background) as GradientDrawable
@@ -52,24 +54,42 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Invalid color", Toast.LENGTH_SHORT).show()
         }
 
-        return color;
+        return color
     }
 
     private fun progressColor(){
         val countDouwn = object :CountDownTimer(totalTime, 1000){
             override fun onFinish() {
-
+                btn_reset.visibility = View.VISIBLE
             }
 
             override fun onTick(millisUntilFinished: Long) {
-                val percent= (millisUntilFinished/totalTime)*100
-                progress_count.progress = percent.toInt()
+                btn_reset.visibility = View.INVISIBLE
+                val percent= (millisUntilFinished/totalTime)
+                progress_count.progress = percent.toInt()*100
+
+                val offColor = Color.parseColor("#C1C1C1")
+                var progressColor = Color.rgb(255,0,0)
+                if(percent < 0.5){
+                    progressColor = Color.rgb(255, 255*percent.toInt()*2, 0)
+                }else{
+                    progressColor = Color.rgb(255*(1 - percent.toInt()) , 255, 0)
+                }
+
+                changeProgressBG(
+                    progressbar = progress_count,
+                    onColor = progressColor,
+                    offColor = offColor
+                )
 
             }
         }
+
+        countDouwn.start()
     }
 
     fun onClickReset(view: View){
-        progress_count.progress = 0;
+        progress_count.progress = 0
+        progressColor()
     }
 }
