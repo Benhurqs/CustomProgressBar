@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val totalTime = 5000L
+    private val totalTime = 15000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         progress.progress = 50
         edt_background.setText("#FF0000")
         edt_progress.setText("#00FF00")
+        progressColor()
     }
 
     fun onClickChangeProgressColor(view: View){
