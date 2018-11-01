@@ -59,22 +59,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun progressColor(){
-        val countDouwn = object :CountDownTimer(totalTime, 1000){
+        val countDouwn = object :CountDownTimer(totalTime, 100){
             override fun onFinish() {
                 btn_reset.visibility = View.VISIBLE
             }
 
             override fun onTick(millisUntilFinished: Long) {
                 btn_reset.visibility = View.INVISIBLE
-                val percent= (millisUntilFinished/totalTime)
-                progress_count.progress = percent.toInt()*100
+                val percent= (millisUntilFinished*100/totalTime)
+
+                progress_count.progress = percent.toInt()
 
                 val offColor = Color.parseColor("#C1C1C1")
                 var progressColor = Color.rgb(255,0,0)
-                if(percent < 0.5){
-                    progressColor = Color.rgb(255, 255*percent.toInt()*2, 0)
+                if(percent < 50){
+                    val greenColor = (255*percent.toInt()*2)/100
+                    progressColor = Color.rgb(255, greenColor, 0)
                 }else{
-                    progressColor = Color.rgb(255*(1 - percent.toInt()) , 255, 0)
+                    val redColor = (255*2*(100 - percent.toInt()))/100
+                    progressColor = Color.rgb( redColor, 255, 0)
                 }
 
                 changeProgressBG(
