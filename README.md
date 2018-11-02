@@ -1,1 +1,3 @@
 # CustomProgressBar
+
+![](loading.gif)
