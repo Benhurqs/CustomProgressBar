@@ -58,3 +58,5 @@ After that, we are ready to change this dyanmically.
     progressGradientDrawable.setColorFilter(onColor, PorterDuff.Mode.SRC_IN)
 
 ```
+
+![](custom_progress.gif)
